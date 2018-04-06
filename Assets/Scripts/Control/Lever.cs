@@ -15,24 +15,21 @@ namespace Controller.Mechanism
     [Serializable]
     public sealed class Lever
     {
-        [SerializeField] private float directionDistance = 0.75f;       //The distance that the joystick needs to go before timer is stopped
+        [SerializeField] private float directionDistance = 0.75f;           //The distance that the joystick needs to go before timer is stopped
+        private float horizontalTimer = 0f;
+        private float verticalTimer = 0f;
 
-        //Horizontal input properties
-        public float Horizontal { get; set; }                           //The base horizontal input of the joystick
-        public float AbsoluteHorizontal { get; private set; }           //The absolute value of the horizontal input (Never negative)
-        public float RawHorizontal { get; private set; }                //The raw value of horizontal input. Value goes directly from 0 to 1/-1
+        public float Horizontal { get; set; }                               //The base horizontal input of the joystick
+        public float AbsoluteHorizontal { get; private set; }               //The absolute value of the horizontal input (Never negative)
+        public float RawHorizontal { get; private set; }                    //The raw value of horizontal input. Value goes directly from 0 to 1/-1
+        public float HorizontalTimer { get { return horizontalTimer; } }    //Returns the time it takes for the lever to go from 0 to past 0.75(Abs) in the horizontal direction
 
-        //Vertical input properties
-        public float Vertical { get; set; }                             //The base vertical input of the joystick
-        public float AbsoluteVertical { get; private set; }             //The absolute value of the vertical input (Never negative)
-        public float RawVertical { get; private set; }                  //The raw value of vertical input. Value goes directly from 0 to 1/-1
+        public float Vertical { get; set; }                                 //The base vertical input of the joystick
+        public float AbsoluteVertical { get; private set; }                 //The absolute value of the vertical input (Never negative)
+        public float RawVertical { get; private set; }                      //The raw value of vertical input. Value goes directly from 0 to 1/-1
+        public float VerticalTimer { get {return verticalTimer; } }         //Returns the time it takes for the lever to go from 0 to past 0.75(Abs) in the vertical direction
 
-        //Horizontal and Vertical property
-        public Vector2 Circle { get; private set; }                     //The Vector2 property of the Horizontal and Vertical input properties
-
-        //Timers that measure how fast the stick is moved
-        public float HorizontalTimer { get; private set; }              //Returns the time it takes for the lever to go from 0 to past 0.75(Abs) in the horizontal direction
-        public float VerticalTimer { get; private set; }                //Returns the time it takes for the lever to go from 0 to past 0.75(Abs) in the vertical direction
+        public Vector2 Circle { get; private set; }                         //The Vector2 property of the Horizontal and Vertical input properties
 
         //Updates all of the different values of the lever. The parameter playerNumber is for mapping the controller
         //to the correct player (Player One, Player Two, Player Three, or Player Four)
@@ -48,12 +45,12 @@ namespace Controller.Mechanism
 
             Circle = new Vector2(Horizontal, Vertical);
 
-            MeasureInput(AbsoluteHorizontal, HorizontalTimer);
-            MeasureInput(AbsoluteVertical, VerticalTimer);
+            SetTimer(AbsoluteHorizontal, ref horizontalTimer);
+            SetTimer(AbsoluteVertical, ref verticalTimer);
         }
 
         //Measures how fast the joystick is moved in a direction
-        private void MeasureInput(float direction, float timer)
+        private void SetTimer(float direction, ref float timer)
         {
             if (direction == 0f)
             {

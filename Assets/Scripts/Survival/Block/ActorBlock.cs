@@ -26,10 +26,7 @@ namespace Actor
         public void Block(bool block)
         {
             if (block && currentShield > 0f && !isStunned)
-            {
                 currentShield -= shieldDuration;
-                print(currentShield);
-            }
             else if (currentShield != shieldStrength && currentShield > 0 && !isStunned)
                 currentShield += shieldDuration;
             else if (currentShield <= 0f && !isStunned)

@@ -246,6 +246,7 @@ GameObject:
   - component: {fileID: 236186708}
   - component: {fileID: 236186714}
   - component: {fileID: 236186713}
+  - component: {fileID: 236186716}
   m_Layer: 8
   m_Name: Pumpkin Head -- Main v2
   m_TagString: Player
@@ -292,7 +293,7 @@ Animator:
   m_GameObject: {fileID: 236186707}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: a4eba9a02021f934cb44f0a1a665469a, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8cbd47b2cfa2c904bb25ee6c62650f37, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -328,6 +329,9 @@ MonoBehaviour:
   lever:
     directionDistance: 0.75
   buttons:
+  - pressThreshold: 0
+  - pressThreshold: 0
+  - pressThreshold: 0
   - pressThreshold: 0
   - pressThreshold: 0
 --- !u!114 &236186713
@@ -368,6 +372,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bubbles: []
+--- !u!114 &236186716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 236186707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b3c1d88407b1b448ad884d61a65056c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
 --- !u!1 &255055932
 GameObject:
   m_ObjectHideFlags: 0
