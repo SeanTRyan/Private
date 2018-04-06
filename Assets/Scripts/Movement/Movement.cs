@@ -6,7 +6,7 @@
  * 
  * An abstract class that holds common variables associated with movement.
  * It also inherits from the IMovement interface
- */ 
+ */
 
 namespace Actor
 {
@@ -14,8 +14,8 @@ namespace Actor
     public abstract class Movement : MonoBehaviour, IMovement
     {
         [SerializeField] protected ForceMode forceMode;                 //Sets which ForceMode to apply to the Rigidbody of the Actor
-        [SerializeField] protected float speed;                         //The speed of the Actor
-        [SerializeField] protected float drag;                          //The drag of the Rigidbody of the actor
+        [SerializeField] protected float acceleration;                  //The acceleration of the Actor
+        [SerializeField] protected float deceleration;                  //The drag of the Rigidbody of the actor
 
         protected new Rigidbody rigidbody;                              //Rigidbody for getting the component of the Actor
 
@@ -24,6 +24,7 @@ namespace Actor
         protected virtual void Awake()
         {
             rigidbody = GetComponent<Rigidbody>();
+            rigidbody.drag = deceleration;
         }
 
         //An abstract method that is implemented by derived classes

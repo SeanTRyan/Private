@@ -7,7 +7,7 @@ using Utility.Enums;
  * April 5, 2018
  * 
  * A controller class that controls the different actions of an Actor
- */ 
+ */
 
 namespace Actor
 {
@@ -18,6 +18,10 @@ namespace Actor
         [SerializeField] private Button[] buttons;                      //An array of buttons that register the different input buttons on the controller
 
         private IMovement movement;                                     //An interface that is able to retrieve different movement components that inherit from IMovement
+        private IJump jump;                                             //An interface that is able to retreive different jump components that inherit from IJump
+        private ActorBlock block;                                       //Block
+
+        private float jumpIncrement = 0f;
 
         private void Awake()
         {
@@ -25,6 +29,8 @@ namespace Actor
                 buttons[i] = new Button();
 
             movement = GetComponent<IMovement>();
+            jump = GetComponent<IJump>();
+            block = GetComponent<ActorBlock>();
         }
 
         private void Update()
@@ -37,17 +43,12 @@ namespace Actor
         private void FixedUpdate()
         {
             movement.Move(lever.Horizontal);
+            jump.Jump(GetButton(ButtonType.Action1).Hold, GetButton(ButtonType.Action1).HoldTimer);
+            block.Block(GetButton(ButtonType.Action2).Hold);
         }
-
-        public Button GetButton(ButtonType buttonType)
-        {
-            return buttons[(int)buttonType];
-        }
-
-        #region Properties
-        public Lever Lever { get { return lever; } }
 
         public PlayerNumber PlayerNumber { get { return playerNumber; } }
-        #endregion
+        public Button GetButton(ButtonType buttonType) { return buttons[(int)buttonType]; }
+        public Lever Lever { get { return lever; } }
     }
 }

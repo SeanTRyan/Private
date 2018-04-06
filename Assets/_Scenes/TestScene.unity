@@ -241,8 +241,10 @@ GameObject:
   - component: {fileID: 236186710}
   - component: {fileID: 236186709}
   - component: {fileID: 236186711}
-  - component: {fileID: 236186708}
   - component: {fileID: 236186712}
+  - component: {fileID: 236186715}
+  - component: {fileID: 236186708}
+  - component: {fileID: 236186714}
   - component: {fileID: 236186713}
   m_Layer: 8
   m_Name: Pumpkin Head -- Main v2
@@ -263,8 +265,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forceMode: 2
-  speed: 10
-  drag: 0
+  acceleration: 40
+  deceleration: 3
 --- !u!54 &236186709
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -329,6 +331,32 @@ MonoBehaviour:
   - pressThreshold: 0
   - pressThreshold: 0
 --- !u!114 &236186713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 236186707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90c46d79786a6894b84e442d5f2fd465, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shieldStrength: 150
+  shieldDuration: 1
+--- !u!114 &236186714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 236186707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 488e513040bb1de4483953298d50621e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpHeight: 20
+  jumpDelay: 0.1
+--- !u!114 &236186715
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
