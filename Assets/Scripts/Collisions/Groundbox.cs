@@ -10,14 +10,10 @@ namespace Actor.Collisions
     public class Groundbox
     {
         [SerializeField] private float normalPoint = 0.5f;
-        [SerializeField] private bool onGround;
 
-        private List<Collider> groundList;
+        private List<Collider> groundList = new List<Collider>();
 
-        public Groundbox()
-        {
-            groundList = new List<Collider>();
-        }
+        public bool OnGround { get; private set; }
 
         public void OnCollisionEnter(Collision collision)
         {
@@ -35,14 +31,14 @@ namespace Actor.Collisions
             {
                 if (!groundList.Contains(collision.collider))
                     groundList.Add(collision.collider);
-                onGround = true;
+                OnGround = true;
             }
             else
             {
                 if (groundList.Contains(collision.collider))
                     groundList.Remove(collision.collider);
                 if (groundList.Count == 0)
-                    onGround = false;
+                    OnGround = false;
             }
         }
 
@@ -51,14 +47,7 @@ namespace Actor.Collisions
             if (groundList.Contains(collision.collider))
                 groundList.Remove(collision.collider);
             if (groundList.Count == 0)
-                onGround = false;
+                OnGround = false;
         }
-
-        #region Properties
-        public bool OnGround
-        {
-            get { return onGround; }
-        }
-        #endregion
     }
 }

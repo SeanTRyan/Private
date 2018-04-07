@@ -1,64 +1,105 @@
-﻿using System.Collections;
+﻿using Actor.Animation;
+using System.Collections;
 using UnityEngine;
-
-/* ACTOR JUMP
- * Sean Ryan
- * April 5, 2018
- * 
- * ActorJump is a component that is responsible for jump motions of the actor
- */ 
 
 namespace Actor
 {
+    /// <summary>
+    /// A component that handles the different jump aspects of the Actor.
+    /// </summary>
     public class ActorJump : MonoBehaviour
     {
-        [SerializeField] private float jumpHeight;
-        [SerializeField] private float jumpDelay;
+        [SerializeField] private float jumpHeight = 20f;
+        [SerializeField] private float jumpDelay = 0.1f;
+        [SerializeField] private int jumpNumber = 2;
 
-        public float JumpDelay { get { return jumpDelay; } }
-
-        private float jumpCounter = 0f;
-        private bool onGround = true;
+        private float crestHeight = 0f;
+        private int jumpNumberReset;
 
         private new Rigidbody rigidbody;
-        private JumpBehaviour jumpBehaviour;
-        private Animator animator;
+        private new Transform transform;
+        [SerializeField] private new JumpAnimation animation;
+
+        public bool OnGround { get; private set; }
+        public bool OnCrest { get; private set; }
+        public float JumpCounter { get; set; }
+        public float JumpDelay { get { return jumpDelay; } }
+        public float JumpHeight { get { return jumpHeight; } }
 
         private void Awake()
         {
-            animator = GetComponent<Animator>();
-            jumpBehaviour = animator.GetBehaviour<JumpBehaviour>();
-            jumpBehaviour.jump = this;
-
             rigidbody = GetComponent<Rigidbody>();
+            transform = GetComponent<Transform>();
+
+            animation.Init(this);
+
+            crestHeight = transform.localPosition.y;
+            jumpNumberReset = jumpNumber;
+
+            OnGround = true;
+
+            GetComponent<ActorBubble>().OnGround += Ground_Event;
         }
 
-        public void Jump(bool click, float gradient)
+        public void Jump(bool click)
         {
-            jumpDelay = jumpBehaviour.JumpDelay - 0.1f;
+            OnCrest = CrestCheck(transform.localPosition.y);
 
-            if (click && gradient < jumpDelay)
+            if (click)
             {
-                jumpCounter += (0.2f * jumpHeight);
-
                 StopAllCoroutines();
                 StartCoroutine(Initiate(jumpDelay));
             }
 
-            Animations(click);
+            if (OnGround)
+                ResetJump();
+
+            Animation(click);
+        }
+
+        public void SetJumpHeight(bool hold)
+        {
+            if (hold && JumpCounter < jumpHeight)
+                JumpCounter += 5f;
+
         }
 
         private IEnumerator Initiate(float delay)
         {
+            if (!OnGround || jumpNumber <= 0)
+                yield break;
+
             yield return new WaitForSeconds(jumpDelay);
-            rigidbody.velocity = Vector2.up * jumpCounter;
-            jumpCounter = 0f;
+            rigidbody.velocity = Vector2.up * JumpCounter;
+
+            jumpNumber--;
+            JumpCounter = 0f;
         }
 
-        private void Animations(bool value)
+        private bool CrestCheck(float currentHeight)
         {
-            animator.SetBool("HasJumped", value);
-            animator.SetBool("OnGround", onGround);
+            if (currentHeight >= crestHeight || OnGround)
+            {
+                crestHeight = currentHeight;
+                return false;
+            }
+            else
+                return true;
         }
+
+        private void Animation(bool value)
+        {
+            animation.SetJump(value);
+            animation.SetFall(OnCrest);
+            animation.SetLand(OnGround);
+        }
+
+        private void ResetJump()
+        {
+            crestHeight = transform.localPosition.y;
+            jumpNumber = jumpNumberReset;
+        }
+
+        private void Ground_Event(bool value) { OnGround = value; }
     }
 }

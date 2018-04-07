@@ -52,8 +52,8 @@ namespace Actor
 
         protected virtual void Animation(bool value, float direction)
         {
-            animation.SetBool(value);
-            animation.SetFloat(direction);
+            animation.SetDash(value);
+            animation.SetSpeed(direction);
         }
     }
 }

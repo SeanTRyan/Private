@@ -8,7 +8,7 @@ namespace Actor
 {
     public class AttackBehaviour : StateMachineBehaviour
     {
-        [HideInInspector] public Attack actorAttack;
+        [HideInInspector] public ActorAttack actorAttack;
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {

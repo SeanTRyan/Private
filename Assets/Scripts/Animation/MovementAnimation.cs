@@ -25,8 +25,8 @@ namespace Actor.Animation
                 movementBehaviour.movement = movement;
         }
 
-        public void SetFloat(float value) { animator.SetFloat(movementName, value, smoothing, Time.deltaTime); }
+        public void SetSpeed(float value) { animator.SetFloat(movementName, value, smoothing, Time.deltaTime); }
 
-        public void SetBool(bool value) { animator.SetBool(dashName, value); }
+        public void SetDash(bool value) { animator.SetBool(dashName, value); }
     }
 }

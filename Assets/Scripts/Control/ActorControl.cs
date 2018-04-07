@@ -18,7 +18,10 @@ namespace Actor
         private Movement movement;                                      //An interface that is able to retrieve different movement components that inherit from IMovement
         private ActorJump jump;                                         //An interface that is able to retreive different jump components that inherit from IJump
         private ActorBlock block;                                       //Block
-        private Attack attack;
+        private ActorAttack attack;
+
+        public PlayerNumber PlayerNumber { get { return playerNumber; } }
+        public Lever Lever { get { return lever; } }
 
         private void Awake()
         {
@@ -28,7 +31,7 @@ namespace Actor
             movement = GetComponent<Movement>();
             jump = GetComponent<ActorJump>();
             block = GetComponent<ActorBlock>();
-            attack = GetComponent<Attack>();
+            attack = GetComponent<ActorAttack>();
         }
 
         private void Update()
@@ -42,8 +45,7 @@ namespace Actor
         {
             UpdateMovement();
 
-            if(!movement.IsRotating)
-                UpdateJump();
+            UpdateJump();
 
             UpdateBlock();
         }
@@ -57,7 +59,11 @@ namespace Actor
 
         private void UpdateJump()
         {
-            jump.Jump(GetButton(ButtonType.Action1).Hold, GetButton(ButtonType.Action1).HoldTimer);
+            if (movement.IsRotating)
+                return;
+
+            jump.SetJumpHeight(GetButton(ButtonType.Action1).Hold);
+            jump.Jump(GetButton(ButtonType.Action1).Consume);
         }
 
         private void UpdateBlock()
@@ -65,8 +71,9 @@ namespace Actor
             block.Block(GetButton(ButtonType.Action2).Hold);
         }
 
-        public PlayerNumber PlayerNumber { get { return playerNumber; } }
-        public Button GetButton(ButtonType buttonType) { return buttons[(int)buttonType]; }
-        public Lever Lever { get { return lever; } }
+        public Button GetButton(ButtonType buttonType)
+        {
+            return buttons[(int)buttonType];
+        }
     }
 }
