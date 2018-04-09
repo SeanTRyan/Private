@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Utility.Enums;
 
-namespace Utility.Enums
+namespace Utility.Shapes
 {
-    public enum BubbleType
+    public interface IShape
     {
-        None,
-
-        HitBubble,
-        HurtBubble,
+        Shape Shape { get; }
     }
 }

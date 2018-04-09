@@ -1,6 +1,7 @@
 ﻿using Actor.Collisions;
 using System.Collections.Generic;
 using UnityEngine;
+using Utility.Enums;
 
 namespace Actor
 {
@@ -10,7 +11,8 @@ namespace Actor
     /// </summary>
     public class ActorBubble : MonoBehaviour
     {
-        public List<GameObject> bubbles;                    //List of GameObjects that add different collision bubbles.
+        public List<GameObject> bubbles = new List<GameObject>();                    //List of GameObjects that add different collision bubbles.
+        public List<BubbleType> bubbleType = new List<BubbleType>();
         Groundbox groundBox = new Groundbox();
 
         public delegate void GroundEvent(bool value);

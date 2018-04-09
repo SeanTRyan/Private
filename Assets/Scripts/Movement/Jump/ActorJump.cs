@@ -9,6 +9,7 @@ namespace Actor
     /// </summary>
     public class ActorJump : MonoBehaviour
     {
+        [SerializeField] private float gravity = 10f;
         [SerializeField] private float jumpHeight = 20f;
         [SerializeField] private float jumpDelay = 0.1f;
         [SerializeField] private int jumpNumber = 2;
@@ -45,6 +46,11 @@ namespace Actor
         {
             OnCrest = CrestCheck(transform.localPosition.y);
 
+            print("Jump");
+
+            if (!OnGround)
+                rigidbody.AddForce(Vector3.down * gravity);
+
             if (click)
             {
                 StopAllCoroutines();
@@ -66,7 +72,7 @@ namespace Actor
 
         private IEnumerator Initiate(float delay)
         {
-            if (!OnGround || jumpNumber <= 0)
+            if (!OnGround && jumpNumber <= 0)
                 yield break;
 
             yield return new WaitForSeconds(jumpDelay);

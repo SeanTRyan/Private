@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Utility.Enums
 {
-    public enum BubbleShape
+    public enum Shape
     {
         None,
 

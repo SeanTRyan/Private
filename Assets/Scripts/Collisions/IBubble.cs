@@ -21,7 +21,9 @@ namespace Actor.Bubbles
         BodyArea BodyArea { get; set; }
         Vector3 Offset { get; set; }
         Transform Link { get; set; }
-        BubbleShape Shape { get; set; }
+        Shape Shape { get; set; }
         BubbleType Type { get; set; }
+        float Radius { get; set; }
+        Vector3 Size { get; set; }
     }
 }

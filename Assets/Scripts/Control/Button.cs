@@ -18,6 +18,7 @@ namespace Controller.Mechanism
     public sealed class Button
     {
         [SerializeField] private float pressThreshold = 1.0f;                    //The max amount of time that a button can be pressed before it resets to 0
+        private bool consume;
 
         ///<summary>A bool for determining whether the button is clicked</summary>
         public bool Click { get; set; }
@@ -27,9 +28,9 @@ namespace Controller.Mechanism
         {
             get
             {
-                if(Click)
+                if(consume)
                 {
-                    Click = false;
+                    consume = false;
                     return true;
                 }
                 return false;
@@ -58,9 +59,11 @@ namespace Controller.Mechanism
             if (keyNum <= 0)
                 return;
 
-            Click = (!Click) ? Input.GetKeyDown("joystick " + (int)playerNumber + " button " + keyNum) : Click;
+            Click = /*(!Click) ? */Input.GetKeyDown("joystick " + (int)playerNumber + " button " + keyNum); /*: Click;*/
             Release = Input.GetKeyUp("joystick " + (int)playerNumber + " button " + keyNum);
             Hold = Input.GetKey("joystick " + (int)playerNumber + " button " + keyNum);
+
+            consume = (!consume) ? Click : consume;
 
             HoldTimer = (Hold) ? TimerUpdate(HoldTimer) : 0f;
             Press = (Click) ? Press + 1 : (pressTimer > pressThreshold) ? 0 : Press;

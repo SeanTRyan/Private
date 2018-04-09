@@ -12,7 +12,7 @@ using Utility.Identifer;
 
 namespace Actor
 {
-    public class HurtBubble : BubbleBehaviour
+    public class HurtBubble : Bubble
     {
         private void Awake()
         {
