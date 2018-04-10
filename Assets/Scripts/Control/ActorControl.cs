@@ -62,8 +62,7 @@ namespace Actor
             //if (movement.IsRotating)
                 //return;
 
-            jump.SetJumpHeight(GetButton(ButtonType.Action1).Hold);
-            jump.Jump(GetButton(ButtonType.Action1).Consume);
+            jump.Jump(GetButton(ButtonType.Action1).Consume, GetButton(ButtonType.Action1).Hold);
         }
 
         private void UpdateBlock()

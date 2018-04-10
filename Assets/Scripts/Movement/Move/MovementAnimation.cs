@@ -11,6 +11,7 @@ namespace Actor.Animation
     {
         [SerializeField] private string movementName = "Speed";
         [SerializeField] private string dashName = "HasDashed";
+        [SerializeField] private string turnName = "IsTurning";
         [SerializeField] private float smoothing = 0.2f;
 
         private MovementBehaviour movementBehaviour;
@@ -28,5 +29,7 @@ namespace Actor.Animation
         public void SetSpeed(float value) { animator.SetFloat(movementName, value, smoothing, Time.deltaTime); }
 
         public void SetDash(bool value) { animator.SetBool(dashName, value); }
+
+        public void SetTurn(bool value) { animator.SetBool(turnName, value); }
     }
 }

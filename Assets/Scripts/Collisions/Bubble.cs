@@ -1,5 +1,4 @@
-﻿using Actor.Bubbles;
-using System;
+﻿using System;
 using System.Text;
 using UnityEngine;
 using Utility.Enums;
@@ -15,7 +14,7 @@ using Utility.Enums;
 namespace Actor
 {
     [Serializable]
-    public abstract class Bubble : MonoBehaviour, IBubble
+    public abstract class Bubble : MonoBehaviour
     {
         [SerializeField] protected StringBuilder bubbleName;
         [SerializeField] protected BodyArea bodyArea;
@@ -37,5 +36,7 @@ namespace Actor
 
         protected abstract void OnTriggerEnter(Collider other);
         protected abstract void OnTriggerExit(Collider other);
+
+        public virtual void Enable(bool value) { gameObject.SetActive(value); }
     }
 }

@@ -20,6 +20,15 @@ namespace Actor
 
         [SerializeField] private bool onGround = true;
 
+        private bool isHurt;
+        private BodyArea bodyArea;
+
+        private void Awake()
+        {
+            foreach (HurtBubble item in GetComponentsInChildren<HurtBubble>())
+                item.HurtChange += Update_HurtEvent;
+        }
+
         private void OnCollisionEnter(Collision collision)
         {
             groundBox.OnCollisionEnter(collision);
@@ -41,6 +50,15 @@ namespace Actor
 
             if (OnGround != null)
                 OnGround(value);
+        }
+
+        private void Update_HurtEvent(bool hurt, BodyArea area)
+        {
+            isHurt = hurt;
+            bodyArea = area;
+
+            print(bodyArea);
+            print(isHurt);
         }
     }
 }

@@ -9,7 +9,9 @@ namespace Actor
     /// </summary>
     public class ActorJump : MonoBehaviour
     {
-        [SerializeField] private float gravity = 10f;
+        [Tooltip("How much gravity will affect this actor while in the air.")]
+        [SerializeField]
+        private float gravity = 10f;
         [SerializeField] private float jumpHeight = 20f;
         [SerializeField] private float jumpDelay = 0.1f;
         [SerializeField] private int jumpNumber = 2;
@@ -42,20 +44,13 @@ namespace Actor
             GetComponent<ActorBubble>().OnGround += Ground_Event;
         }
 
-        public void Jump(bool click)
+        public void Jump(bool click, bool hold)
         {
             OnCrest = CrestCheck(transform.localPosition.y);
 
-            print("Jump");
+            SetJumpHeight(hold);
 
-            if (!OnGround)
-                rigidbody.AddForce(Vector3.down * gravity);
-
-            if (click)
-            {
-                StopAllCoroutines();
-                StartCoroutine(Initiate(jumpDelay));
-            }
+            StartJump(click, hold);
 
             if (OnGround)
                 ResetJump();
@@ -63,11 +58,27 @@ namespace Actor
             Animation(click);
         }
 
-        public void SetJumpHeight(bool hold)
+        private void StartJump(bool click, bool hold)
         {
-            if (hold && JumpCounter < jumpHeight)
-                JumpCounter += 5f;
+            if (click)
+            {
+                StopAllCoroutines();
+                StartCoroutine(Initiate(jumpDelay));
+            }
+        }
 
+        private void SetJumpHeight(bool hold)
+        {
+            if (OnGround) return;
+
+            float gravityCounter = gravity;
+            while (hold && gravityCounter > 0f)
+                gravityCounter -= Time.deltaTime;
+
+            if (gravityCounter < gravity)
+                gravityCounter += Time.deltaTime;
+
+            rigidbody.AddForce(Vector3.down * gravityCounter);
         }
 
         private IEnumerator Initiate(float delay)
@@ -76,7 +87,8 @@ namespace Actor
                 yield break;
 
             yield return new WaitForSeconds(jumpDelay);
-            rigidbody.velocity = Vector2.up * JumpCounter;
+
+            rigidbody.velocity = Vector2.up * JumpHeight;
 
             jumpNumber--;
             JumpCounter = 0f;

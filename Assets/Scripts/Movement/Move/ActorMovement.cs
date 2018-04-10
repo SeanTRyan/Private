@@ -14,18 +14,21 @@ namespace Actor
         //Overrides the Move method of the base class and moves the rigid body
         public override void Move(float direction)
         {
-            if (Halt)
-                return;
+            if (Halt) return;
 
             if (!IsRotating)
             {
-                Forward = new Vector2(direction, 0f) ;
+                Forward = new Vector2(direction, 0f);
+
+                float speed = (IsDashing) ? dashAcceleration : acceleration;
 
                 Vector2 forward = Forward * Time.deltaTime;
-                rigidbody.AddForce((forward * acceleration), forceMode);
+                rigidbody.AddForce((forward * speed), forceMode);
             }
 
             Rotate(direction);
+
+            isTurning = direction * transform.forward.x < 0f;
 
             float animSpeed = Mathf.Abs(direction);
             Animation(IsDashing, animSpeed);

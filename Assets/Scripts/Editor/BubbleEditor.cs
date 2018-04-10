@@ -1,11 +1,8 @@
 ﻿using Actor;
-using Actor.Bubbles;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 using Utility.Enums;
-using Utility.Identifer;
 
 /* BUBBLE EDITOR
  * Sean Ryan
@@ -203,102 +200,4 @@ public class BubbleEditor : Editor
                 break;
         }
     }
-
-    //public override void OnInspectorGUI()
-    //{
-    //    GUILayout.Space(5f);
-
-    //    foldout = EditorGUILayout.Foldout(foldout, "Bubbles", true);
-
-    //    if (!foldout)
-    //        return;
-
-    //    bubbleType = (BubbleType)EditorGUILayout.EnumPopup("Bubble Type", bubbleType);
-
-    //    if (bubbleType != BubbleType.None)
-    //    {
-    //        if (GUILayout.Button("Add"))
-    //        {
-    //            actorBubble.bubbles.Add(new GameObject());
-    //            AddBubble(bubbleType, actorBubble.bubbles[actorBubble.bubbles.Count - 1]);
-    //        }
-
-    //        if (GUILayout.Button("Remove"))
-    //        {
-    //            foreach (GameObject item in actorBubble.bubbles)
-    //                DestroyImmediate(item);
-    //            actorBubble.bubbles.Clear();
-    //        }
-    //    }
-
-    //    foreach (GameObject item in actorBubble.bubbles)
-    //    {
-    //        if (item == null)
-    //        {
-    //            actorBubble.bubbles.Remove(item);
-    //            break;
-    //        }
-
-    //        if (item.GetComponent<Bubble>() == null)
-    //            break;
-
-    //        string label = item.GetComponent<Bubble>().BodyArea.ToString() + " " + item.GetComponent<Bubble>().Type.ToString();
-
-    //        GUILayout.Label(label, EditorStyles.boldLabel);
-    //        GUILayout.Space(10f);
-
-    //        item.GetComponent<Bubble>().BodyArea = (BodyArea)EditorGUILayout.EnumPopup("Body Area", item.GetComponent<Bubble>().BodyArea);
-    //        item.GetComponent<Bubble>().Offset = EditorGUILayout.Vector3Field("Offset", item.GetComponent<Bubble>().Offset);
-    //        item.GetComponent<Bubble>().Link = (Transform)EditorGUILayout.ObjectField("Link", item.GetComponent<Bubble>().Link, typeof(Transform), true);
-    //        Shape bubbleShape = (Shape)EditorGUILayout.EnumPopup("Bubble Shape", item.GetComponent<Bubble>().Shape);
-
-    //        if (item.GetComponent<Bubble>().Link != null)
-    //        {
-    //            item.transform.SetParent(item.GetComponent<Bubble>().Link);
-    //            item.layer = item.GetComponent<Bubble>().Link.gameObject.layer;
-    //            item.transform.position = item.GetComponent<Bubble>().Link.position + item.GetComponent<Bubble>().Offset;
-    //        }
-
-    //        item.transform.position = item.transform.position + item.GetComponent<IBubble>().Offset;
-
-    //        item.name = label;
-
-    //        if (item.GetComponent<Collider>() == null || item.GetComponent<Bubble>().Shape != bubbleShape)
-    //        {
-    //            item.GetComponent<Bubble>().Shape = bubbleShape;
-    //            AddCollider(item);
-
-    //        }
-
-    //        SetSize(item);
-
-    //        if (GUILayout.Button("Delete"))
-    //        {
-    //            DestroyImmediate(item);
-    //            actorBubble.bubbles.Remove(item);
-    //            break;
-    //        }
-
-    //        EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
-    //        GUILayout.Space(10f);
-    //    }
-    //}
-
-    //A method that adds either a HitBubble or a HurtBubble component to the GameObject
-    //private void AddBubble(BubbleType type, GameObject gameObject)
-    //{
-    //    switch (type)
-    //    {
-    //        case BubbleType.HitBubble:
-    //            gameObject.AddComponent<HitBubble>().Type = BubbleType.HitBubble;
-    //            gameObject.tag = Tag.HitBubble;
-    //            break;
-    //        case BubbleType.HurtBubble:
-    //            gameObject.AddComponent<HurtBubble>().Type = BubbleType.HurtBubble;
-    //            gameObject.tag = Tag.HurtBubble;
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    //}
 }

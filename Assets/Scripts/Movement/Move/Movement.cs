@@ -15,6 +15,11 @@ namespace Actor
         [SerializeField] protected float deceleration;                  //The drag of the Rigidbody of the Actor
         [SerializeField] protected float rotationSpeed;                 //The speed that the actor rotates at
 
+        [SerializeField] protected float dashAcceleration;
+        [SerializeField] protected float dashRotationSpeed;
+
+        protected bool isTurning = false;
+
         protected new Rigidbody rigidbody;                              //Rigidbody for getting the component of the Actor
         protected new Transform transform;                              //Transform of the GameObject attached to this component
         [SerializeField] protected new MovementAnimation animation;     //The movement animations
@@ -55,6 +60,7 @@ namespace Actor
         {
             animation.SetDash(value);
             animation.SetSpeed(direction);
+            animation.SetTurn(isTurning);
         }
     }
 }

@@ -63,7 +63,7 @@ namespace Controller.Mechanism
             Release = Input.GetKeyUp("joystick " + (int)playerNumber + " button " + keyNum);
             Hold = Input.GetKey("joystick " + (int)playerNumber + " button " + keyNum);
 
-            consume = (!consume) ? Click : consume;
+            consume = consume || Click;
 
             HoldTimer = (Hold) ? TimerUpdate(HoldTimer) : 0f;
             Press = (Click) ? Press + 1 : (pressTimer > pressThreshold) ? 0 : Press;
