@@ -8,7 +8,7 @@ namespace Actor
 {
     public class MovementBehaviour : StateMachineBehaviour
     {
-        [HideInInspector] public Movement movement;
+        [HideInInspector] public ActorMovement movement;
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {

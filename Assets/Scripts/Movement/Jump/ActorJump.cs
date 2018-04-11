@@ -11,13 +11,13 @@ namespace Actor
     {
         [Tooltip("How much gravity will affect this actor while in the air.")]
         [SerializeField]
-        private float gravity = 10f;
-        [SerializeField] private float jumpHeight = 20f;
+        private float gravity = 40f;
+        [SerializeField] private float jumpHeight = 30f;
         [SerializeField] private float jumpDelay = 0.1f;
         [SerializeField] private int jumpNumber = 2;
 
-        private float crestHeight = 0f;
         private int jumpNumberReset;
+        private float crestHeight = 0f;
 
         private new Rigidbody rigidbody;
         private new Transform transform;
@@ -28,6 +28,7 @@ namespace Actor
         public float JumpCounter { get; set; }
         public float JumpDelay { get { return jumpDelay; } }
         public float JumpHeight { get { return jumpHeight; } }
+
 
         private void Awake()
         {

@@ -16,7 +16,8 @@ namespace Actor
         private float currentShield;
         private float stunDuration = 3.0f;
 
-        private bool isStunned = false;
+        public bool IsStunned { get; private set; }
+        public bool IsBlocking { get; private set; }
 
         private Animator animator;
 
@@ -29,32 +30,39 @@ namespace Actor
 
         public void Block(bool block)
         {
-            if (block && currentShield > 0f && !isStunned)
+            IsBlocking = block;
+
+            if (block && currentShield > 0f && !IsStunned)
                 currentShield -= shieldDuration;
-            else if (currentShield != shieldStrength && currentShield > 0 && !isStunned)
+            else if (currentShield != shieldStrength && currentShield > 0 && !IsStunned)
                 currentShield += shieldDuration;
-            else if (currentShield <= 0f && !isStunned)
+            else if (currentShield <= 0f && !IsStunned)
             {
                 StopAllCoroutines();
                 StartCoroutine(Stun());
             }
 
-            if(!isStunned)
+            print(currentShield);
+
+            if(!IsStunned)
                 animator.SetBool("IsBlocking", block);
-            if(isStunned)
+            if(IsStunned)
                 animator.SetBool("IsBlocking", false);
 
-            animator.SetBool("IsDisabled", isStunned);
+            animator.SetBool("IsDisabled", IsStunned);
+        }
+
+        public void ResetBlock()
+        {
+            currentShield += shieldDuration;
         }
 
         private IEnumerator Stun()
         {
-            isStunned = true;
-            print("Stunned!");
+            IsStunned = true;
             yield return new WaitForSeconds(stunDuration);
-            print("Recovered!");
             currentShield = shieldStrength;
-            isStunned = false;
+            IsStunned = false;
         }
     }
 }

@@ -24,7 +24,6 @@ namespace Actor
             actorAttack.IsAttacking = false;
         }
 
-        public bool IsAttacking { get; private set; }
         public float Speed { get; private set; }
     }
 }

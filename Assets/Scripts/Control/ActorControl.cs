@@ -15,7 +15,7 @@ namespace Actor
         [SerializeField] private Lever lever = new Lever();             //Lever (or joystick) is responsible for the horizontal and vertical input
         [SerializeField] private Button[] buttons;                      //An array of buttons that register the different input buttons on the controller
 
-        private Movement movement;                                      //An interface that is able to retrieve different movement components that inherit from IMovement
+        private ActorMovement movement;                                      //An interface that is able to retrieve different movement components that inherit from IMovement
         private ActorJump jump;                                         //An interface that is able to retreive different jump components that inherit from IJump
         private ActorBlock block;                                       //Block
         private ActorAttack attack;
@@ -28,7 +28,7 @@ namespace Actor
             for (int i = 0; i < buttons.Length; i++)
                 buttons[i] = new Button();
 
-            movement = GetComponent<Movement>();
+            movement = GetComponent<ActorMovement>();
             jump = GetComponent<ActorJump>();
             block = GetComponent<ActorBlock>();
             attack = GetComponent<ActorAttack>();
@@ -39,6 +39,8 @@ namespace Actor
             lever.UpdateLever(playerNumber);
             for (int i = 0; i < buttons.Length; i++)
                 buttons[i].UpdateButton(playerNumber, i + 1);
+
+            UpdateAttack();
         }
 
         private void FixedUpdate()
@@ -52,22 +54,35 @@ namespace Actor
 
         private void UpdateMovement()
         {
-            movement.Halt = attack.IsAttacking;
+            if (block.IsStunned || block.IsBlocking) return;
+
+            movement.Stop = attack.IsAttacking;
             movement.IsDashing = (lever.HorizontalTimer < 0.1f && lever.AbsoluteHorizontal > 0.75f);
             movement.Move(lever.Horizontal);
         }
 
         private void UpdateJump()
         {
-            //if (movement.IsRotating)
-                //return;
+            if (movement.IsRotating || block.IsStunned) return;
 
             jump.Jump(GetButton(ButtonType.Action1).Consume, GetButton(ButtonType.Action1).Hold);
         }
 
         private void UpdateBlock()
         {
+            //if (!jump.OnGround)
+            //{
+                //print("offgrounder");
+                //block.ResetBlock();
+                //return;
+            //}
+
             block.Block(GetButton(ButtonType.Action2).Hold);
+        }
+
+        private void UpdateAttack()
+        {
+            attack.Attack(GetButton(ButtonType.Action3).Click);
         }
 
         public Button GetButton(ButtonType buttonType)

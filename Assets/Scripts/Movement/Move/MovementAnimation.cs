@@ -17,7 +17,7 @@ namespace Actor.Animation
         private MovementBehaviour movementBehaviour;
         private Animator animator;
 
-        public void Init(Movement movement)
+        public void Init(ActorMovement movement)
         {
             animator = movement.GetComponent<Animator>();
             movementBehaviour = animator.GetBehaviour<MovementBehaviour>();
